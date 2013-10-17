@@ -13,7 +13,7 @@
     
     
     //case CheckInDatabase checks to see if the user is in the db and returns the classes they are in and saves that in _SESSION['result']
-    switch ($i){
+    switch ($_SESSION['query']){
         case getCourses:
             $ans = mysql_query("
                                SELECT DISTINCT CourseName
@@ -171,7 +171,7 @@
             mysql_query("
                         INSERT INTO StudentAnswers (SUCID,TID,QID,Answer,PointsEarned)
                         VALUES ('".$_SESSION['user']."',$TID,$QID,$Answer,$Points
-                                ");
+                        ");
             
             $temp = mysql_query("
                                 SELECT *
@@ -255,29 +255,27 @@
             
         default:
             
-            $student=mysql_query("
-                                 SELECT *
-                                 FROM Student
-                                 WHERE SUCID = '".$_SESSION['user']."'
-                                 ");
             $teacher=mysql_query("
                                  SELECT *
                                  FROM Teacher
                                  WHERE TUCID = '".$_SESSION['user']."'
                                  ");
+            $student=mysql_query("
+                                 SELECT *
+                                 FROM Student
+                                 WHERE SUCID = '".$_SESSION['user']."'
+                                 ");
             
+            if(mysql_fetch_array($teacher)){
+                $_SESSION['teacher']=true;
+                header("location:http://web.njit.edu/~dc98/CS490/lobby.php");
+                
+            }
             if(mysql_fetch_array($student)){
                 $_SESSION['teacher']=false;
                 header("location:http://web.njit.edu/~dc98/CS490/lobby.php");
-                
-            }else if(mysql_fetch_array($teacher)){
-                $_SESSION['teacher']=true;
-                header("location:http://web.njit.edu/~dc98/CS490/lobby.php");
             }
-            else{
-                $_SESSION['response'] = "Your UCID does not exist in the database";
-                header("location:http://web.njit.edu/~dc98/CS490/login.php?status=usernotexists");
-            }
+    
             
             
             
