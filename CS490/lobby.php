@@ -11,10 +11,8 @@
     <body>
         <div id="container">
             <div id="header">
-            <!--Controller for header.-->
-            <!--I want "STUDENT" to change to "TEACHER" if a Teacher logs in.-->
-            <!--I also want to change the "NOW WITH..." fun stuff to be randomly generated.-->
-            <!--That's just for fun, do not prioritze highly-->
+            <!--Controller for header.
+           		I want "STUDENT" to change to "TEACHER" if a Teacher logs in.-->
                 <h1><span class="on">NJIT<span class="off">Student</span>
                 <?php
 					echo $_SESSION['user'];
@@ -29,6 +27,7 @@
                     <li class="menuitem"><a href="login.php">Home</a></li>
                     <!--The About Page will be documentation for the FINAL version-->
                     <li class="menuitem"><a href="login.php">About</a></li>
+                    <li class="menuitem"><a href="TestTemplate.php">Tests</a></li>
                     <li class="menuitem"><a href="login.php?status=loggedout">Log Out</a></li>
                 </ul>
             </div>
@@ -63,21 +62,16 @@
 										for ($x=0; $x<$counter; $x++)
 										{
 											//echo "<b>Course Name:</b> ".$_SESSION['result'][$x][0]."<br>";
-											echo "<li><a href=\"#\">".$_SESSION['result'][$x][0]."</a></li>";        
+											echo "<li><a href=\"#\">".$_SESSION['result'][$x][0]."</a></li>";
 										} 
 											
 										//unset($_SESSION['status']);	
 									} 
 									else 
 									{	
-										$_SESSION['query'] = "SELECT CourseName FROM Class 
-																WHERE CourseID IN 
-																(SELECT CourseID FROM Attends 
-																WHERE SUCID IN (SELECT SUCID 
-																FROM Student WHERE SUCID = '"
-																.$_SESSION['user']."' ))";
+										$_SESSION['query'] = "getClasses";
 									
-										header("location:http://web.njit.edu/~sam53/queryparser.php");
+										header("location:http://web.njit.edu/~sam53/tunnel.php");
 									}
 								} 
 							?>

@@ -6,7 +6,7 @@
     <body>
         <div id = "login">
           <form name="form1" form method ="post" action ="">
-            <h1 align="center">Create a Question</h1>
+            <h1 align="center">Create a Multiple Choice Question</h1>
                     <p align="center">
                         <u><strong>Choose the appropriate Course Question Bank.</strong></u><br>
                         <br>
@@ -34,21 +34,7 @@
                             -->
                         </select>
                     </p>
-                    
-                <hr>
-                
-                    <p align="center">
-                   	<u><strong>Indicate the type of Question this will be. </strong></u><strong></strong></p>
-                    <p align="center"> 
-                  
-                                    <input type="radio" name="qtype" 
-                                           value="mc">
-                                Multiple Choice<br>
-                                    <input type="radio" name="qtype" 
-                                           value="oe">
-                                Open Ended
-                    </p>
-            
+                             
                 <hr>
                 
                     <p align = "center">
@@ -63,7 +49,7 @@
                         ***TEAM: I think I may need a function to first ask how many choices we give and then ask what the answers shoudl be? Otherwise this is just easier.***
                       			<br>
                                 <br>
-		                <u><strong>Multiple Choice Answers (For MC Only):</strong></u><br>
+		                <u><strong>Answer Choices:</strong></u><br>
                         <br>
               <label for = "mca"> Answer Choice 1: </label>
 			  <input type="text" 
