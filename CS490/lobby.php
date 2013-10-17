@@ -13,12 +13,16 @@
             <div id="header">
             <!--Controller for header.
            		I want "STUDENT" to change to "TEACHER" if a Teacher logs in.-->
-                <h1><span class="on">NJIT<span class="off">Student</span>
+                <h1><span class="on">NJIT<span class="off">
                 <?php
+					if($_SESSION['teacher'])
+						echo "Teacher </span>";
+					else
+						echo "Student </span>";
 					echo $_SESSION['user'];
 				?>
                 </h1>
-                <h2>Now With Less Women! </h2>
+                <h2>Only 24% Female! </h2>
             </div>   
             
             <!--Horizontal Top Bar-->
@@ -56,8 +60,10 @@
 								{
 									//If result exists, meaning we have acquired SQL info, 
 									//otherwise Query to retrieve classes.
+									/*
 									if(isset($_SESSION['result']))
 									{		
+										$coursenames = $_SESSION['result'];
 										$counter = count ($_SESSION['result'] );
 										//echo "lobby.php Session[result] updated with CourseNames";
 	
@@ -68,31 +74,67 @@
 										} 
 											
 										//unset($_SESSION['status']);	
-									} 
+									}
+									*/
+									if(isset($_SESSION['result']))
+        							{  
+										${$_SESSION['query']} = $_SESSION['result'];
+									  
+									  	$counter = count ($getCourses);
+							 
+									  	for ($x=0; $x<$counter; $x++)
+									  	{
+									   		//echo "<b>Course Name:</b> ".$_SESSION['result'][$x][0]."<br>";
+									   		echo "<li><a href=\"#\">".$getCourses[$x][0]."</a></li>";
+          								}
+									}
 									else 
 									{	
-										
+										/*
 										if(isset($_SESSION['tried']))
 										{
 											echo "You already tried this query and failed";
 										}
 										else
 										{
-											$query = 0;
-											$_SESSION['tried'] = 1;
-											header("location: http://web.njit.edu/~sam53/tunnel.php");
-										}	
-										
-										/*
-										$_SESSION['query'] = "SELECT CourseName FROM Class 
+											*/
+											/*
+											$query = "SELECT CourseName FROM Class 
 																WHERE CourseID IN 
 																(SELECT CourseID FROM Attends 
 																WHERE SUCID IN (SELECT SUCID 
 																FROM Student WHERE SUCID = '"
 																.$_SESSION['user']."' ))";
-									
+											*/
+											/*											$query = "getCourses";
+											//$_SESSION['tried'] = 1;
+											header("location: http://web.njit.edu/~wgs4/main.php");
+											*/
+										//}
+										
+										
+										if($_SESSION['teacher'])
+										{
+											$_SESSION['query'] = "SELECT CourseName FROM Class 
+																WHERE CourseID IN 
+																(SELECT CourseID FROM Teaches 
+																WHERE TUCID IN (SELECT TUCID 
+																FROM Teacher WHERE TUCID = '"
+																.$_SESSION['user']."' ))";
+										}
+										else
+										{
+											$_SESSION['query'] = "SELECT CourseName FROM Class 
+																WHERE CourseID IN 
+																(SELECT CourseID FROM Attends 
+																WHERE SUCID IN (SELECT SUCID 
+																FROM Student WHERE SUCID = '"
+																.$_SESSION['user']."' ))";
+										}
+										
 										header("location: http://web.njit.edu/~sam53/queryparser.php");
-										*/
+										
+									//	}
 									}
 								} 
 							?>
@@ -106,18 +148,11 @@
                 <div id="content_top">
                 </div>
                 <div id="content_main">
-                    <h2>LET ME TELL YOU ALL ABOUT HOW MUCH I HATE THIS </h2>
+                    <h2>Welcome to stuff </h2>
                         <p>&nbsp;</p>
                         <p>&nbsp;</p>
-                    <h3>1st Paragraph Header</h3>
-                        <p>Biggest Load of Poppycock Yet</p>
-                        <p>&nbsp;</p>
-                    <h3>2nd Paragraph Header</h3>
-                        <p>Let me Sing You a Song about my Hate</p>
-                        <p>&nbsp;</p>
-                    <h3>3rd Paragraph Header</h3>
-                        <p>I pray for a miracle</p>
-                        <p>&nbsp;</p>
+                    <h3>Header</h3>
+                        <p>What's up?</p>
             </div>
                 <div id="content_bottom">
                 </div>

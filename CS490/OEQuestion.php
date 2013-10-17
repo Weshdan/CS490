@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title>Question Maker</title>
+		<title>OE Question Maker</title>
 	</head>
 
     <body>
@@ -34,6 +34,14 @@
                             -->
                         </select>
                     </p>
+                    
+                <hr>    
+                	<p align = "center">
+                     <label for = "tc1"> <strong><u>Test Name:</u></strong><br>
+                       <br>
+                     </label>
+                      <input name="tc1" type="text" id="tc1" />
+           	</p>
                 <hr>
                 
                     <p align = "center">

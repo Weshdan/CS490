@@ -129,15 +129,12 @@
                 <div id="content_top">
                 </div>
                 <div id="content_main">
-                    <h1>Test (Function to call Test Name Here)  </h1>
+                    <h2>Welcome to stuff </h2>
                         <p>&nbsp;</p>
                         <p>&nbsp;</p>
-                    <h3>Shut up and take your test. You have this much time to complete it.</h1>
-                   		<p>&nbsp;</p>
-                        <p>(Function to Pull up questions and answer choices here)</p>
-                        <p>&nbsp;</p>
-            	</div>
-                
+                    <h3>Header</h3>
+                        <p>What's up?</p>
+            </div>
                 <div id="content_bottom">
                 </div>
                 

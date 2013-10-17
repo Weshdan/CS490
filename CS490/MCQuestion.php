@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title>Question Maker</title>
+		<title>MC Question Maker</title>
 	</head>
 
     <body>
@@ -14,7 +14,7 @@
             		</p>
           
                     <p align="center">
-                        <label for = "name"> Course: </label>
+                        <label for = "course"> Course: </label>
                         <select>
                             <option value="course1">Course1</option>
                             <option value="course2">Course2</option>
@@ -34,7 +34,14 @@
                             -->
                         </select>
                     </p>
-                             
+                <hr>    
+                	<p align = "center">
+                     <label for = "tc1"> <strong><u>Test Name:</u></strong><br>
+                       <br>
+                     </label>
+                      <input name="tc1" type="text" id="tc1" />
+           	</p>   
+                  
                 <hr>
                 
                     <p align = "center">
