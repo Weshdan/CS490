@@ -14,7 +14,7 @@
     
     //case CheckInDatabase checks to see if the user is in the db and returns the classes they are in and saves that in _SESSION['result']
     switch ($_SESSION['query']){
-        case getCourses:
+        case "getCourses":
             $ans = mysql_query("
                                SELECT DISTINCT CourseName
                                FROM Attends, Teaches, Class
@@ -34,7 +34,7 @@
             break;
             
             
-        case insertMCQuestionToBank:
+        case "insertMCQuestionToBank":
             mysql_query("
                         INSERT INTO Questions (TUCID,CourseID)
                         VALUES ('".$_SESSION['user']."',$CourseID)
@@ -65,7 +65,7 @@
             header("location:http://web.njit.edu/~sam53/tunnel.php");
             break;
             
-        case insertOEQuestionToBank:
+        case "insertOEQuestionToBank":
             mysql_query("
                         INSERT INTO Questions (TUCID,CourseID)
                         VALUES ('".$_SESSION['user']."',$CourseID)
@@ -90,7 +90,7 @@
             header("location:http://web.njit.edu/~sam53/tunnel.php");
             break;
             
-        case removeQuestionFromBank:
+        case "removeQuestionFromBank":
             mysql_query("
                         DELETE FROM Questions
                         WHERE QID='$QID' AND CourseID='$CourseID'
@@ -100,7 +100,7 @@
             header("location:http://web.njit.edu/~sam53/tunnel.php");
             break;
             
-        case addTest:
+        case "addTest":
             mysql_query("
                         INSET INTO TEST (CourseID, DayDue, DayAvai, TestName, Practice)
                         VALUES ($CourseID, $Due, $Avai, $Name, $Practice)
@@ -111,7 +111,7 @@
             header("location:http://web.njit.edu/~sam53/tunnel.php");
             break;
             
-        case addQuestionToTest:
+        case "addQuestionToTest":
             mysql_query("
                         INSERT INTO TestQuestions (QID,Points,TID)
                         VALUES ($QID,$Points,$TID)
@@ -122,7 +122,7 @@
             header("location:http://web.njit.edu/~sam53/tunnel.php");
             break;
             
-        case removeQuestionFromTest:
+        case "removeQuestionFromTest":
             mysql_query("
                         DELETE FROM TestQuestions
                         WHERE TID=$TID AND QID=$QID
@@ -133,7 +133,7 @@
             header("location:http://web.njit.edu/~sam53/tunnel.php");
             break;
             
-        case getTestForCourse:
+        case "getTestForCourse":
             $ans=mysql_query("
                              Select *
                              FROM Test
@@ -151,7 +151,7 @@
             header("location:http://web.njit.edu/~sam53/tunnel.php");
             break;
             
-        case studentAnswerForQuestion:
+        case "studentAnswerForQuestion":
             if($Points==-1){
                 $realAnswer = mysql_query("
                                           SELECT Choice
@@ -205,7 +205,7 @@
             header("location:http://web.njit.edu/~sam53/tunnel.php");
             break;
             
-        case getOETestCases:
+        case "getOETestCases":
             $ans= mysql_query("
                               SELECT TestCase
                               FROM OE_Answers
@@ -223,7 +223,7 @@
             header("location:http://web.njit.edu/~sam53/tunnel.php");
             break;
             
-        case getMCOptions:
+        case "getMCOptions":
             $answers = mysql_query("
                                    SELECT Choice
                                    FROM MC_Options
@@ -241,7 +241,7 @@
             header("location:http://web.njit.edu/~sam53/tunnel.php");
             break;
             
-        case getMCQuestions:
+        case "getMCQuestions":
             $_SESSION['result'] = mysql_query("
                                               SELECT Question
                                               FROM MC
