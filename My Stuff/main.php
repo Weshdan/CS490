@@ -270,7 +270,7 @@
                 $_SESSION['teacher']=false;
                 header("location:http://web.njit.edu/~dc98/CS490/lobby.php");
                 
-            }elseif(mysql_fetch_array($teacher)){
+            }else if(mysql_fetch_array($teacher)){
                 $_SESSION['teacher']=true;
                 header("location:http://web.njit.edu/~dc98/CS490/lobby.php");
             }
