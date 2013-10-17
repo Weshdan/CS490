@@ -24,9 +24,9 @@
             <!--Horizontal Top Bar-->
             <div id="menu">
                 <ul>
-                    <li class="menuitem"><a href="login.php">Home</a></li>
+                    <li class="menuitem"><a href="lobby.php">Home</a></li>
                     <!--The About Page will be documentation for the FINAL version-->
-                    <li class="menuitem"><a href="login.php">About</a></li>
+                    <li class="menuitem"><a href="lobby.php">About</a></li>
                     <li class="menuitem"><a href="TestTemplate.php">Tests</a></li>
                     <li class="menuitem"><a href="login.php?status=loggedout">Log Out</a></li>
                 </ul>
@@ -49,6 +49,7 @@
 								if($_SESSION['status'] !='authorized') 
 								{
 									header("location: login.php");
+									//echo "lobby.php session not authorized";
 								}
 								else
 								//if(isset($_SESSION['user'])) 
@@ -58,6 +59,7 @@
 									if(isset($_SESSION['result']))
 									{		
 										$counter = count ($_SESSION['result'] );
+										//echo "lobby.php Session[result] updated with CourseNames";
 	
 										for ($x=0; $x<$counter; $x++)
 										{
@@ -69,9 +71,28 @@
 									} 
 									else 
 									{	
-										$_SESSION['query'] = "getClasses";
+										
+										if(isset($_SESSION['tried']))
+										{
+											echo "You already tried this query and failed";
+										}
+										else
+										{
+											$query = 0;
+											$_SESSION['tried'] = 1;
+											header("location: http://web.njit.edu/~sam53/tunnel.php");
+										}	
+										
+										/*
+										$_SESSION['query'] = "SELECT CourseName FROM Class 
+																WHERE CourseID IN 
+																(SELECT CourseID FROM Attends 
+																WHERE SUCID IN (SELECT SUCID 
+																FROM Student WHERE SUCID = '"
+																.$_SESSION['user']."' ))";
 									
-										header("location:http://web.njit.edu/~sam53/tunnel.php");
+										header("location: http://web.njit.edu/~sam53/queryparser.php");
+										*/
 									}
 								} 
 							?>
@@ -101,7 +122,7 @@
                 <div id="content_bottom">
                 </div>
                 
-                <div id="footer"><h3><a href="http://picturesofwes.tumblr.com">PicturesOfWes</a></h3></div>
+                <div id="footer"><h3><a href="www.google.com">Google</a></h3></div>
           </div>
        </div>
     </body>
