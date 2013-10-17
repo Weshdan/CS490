@@ -50,7 +50,8 @@ if(isset($_GET['status']) && $_GET['status'] == 'loggedout')
              </p>
         </form>
   
-<?php if (isset($_SESSION['response'])) echo "<h4 class = 'alert'>" . $_SESSION['response']. "</h4>"; ?>
+<?php if (isset($_SESSION['response'])) echo "<h4 class = 'alert'>" . $_SESSION['response']. "</h4>"; 
+unset($_SESSION['response']);?>
    </div><!--end login-->
 </body>
 </html>
