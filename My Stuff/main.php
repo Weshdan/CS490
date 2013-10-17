@@ -12,23 +12,13 @@ require_once 'http://web.njit.edu/~sam53/tunnel.php';
     
     
     
-    //case 0 checks to see if the user is in the db
+    //case CheckInDatabase checks to see if the user is in the db and returns the classes they are in and saves that in _SESSION['result']
     switch ($i){
-        case checkInDatabase:
+        case default:
             $student=mysql_query("SELECT * FROM Student WHERE SUCID = '".$_SESSION['user']."'")
             $rows_student = mysql_num_rows($student);
             $teacher=mysql_query("SELECT * FROM Teacher WHERE TUCID = '".$_SESSION['user']."'")
             $rows_teacher = mysql_num_rows($teacher);
-            
-            if($rows_student==1 OR $rows_teacher==1){
-                $ans = mysql_query("SELECT DISTINCT CourseName FROM Attends, Teaches, Class WHERE (Attends.SUCID = '"._SESSION['user']."' OR Teaches.TUCID = '"._SESSION['user']."') AND Attends.CourseID = Class.CourseID AND Teaches.CourseID = Class.CourseID");
-                $arr = array();
-                while($row=mysql_fetch_assoc($ans)){
-                    $arr[]=$row
-                }
-                _SESSION['result']=arr;
-            }
-                
             
             if($rows_student==1){
                 while ($row = mysql_fetch_array($result)) {
