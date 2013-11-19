@@ -23,16 +23,14 @@ if(isset($_GET['status']) && $_GET['status'] == 'loggedout')
 
 		<link rel ="stylesheet" type = "text/css" href = "css/default.css" />
 
-	<script type ="text/javascript" src = "http://ajax.googleapis.com/ajax/libs/jquery/1.3.1/jquery.min.js">
-	</script>
-	<script type ="text/javascript" src = "js/main.js">
-	</script>
+	<script type ="text/javascript" src = "http://ajax.googleapis.com/ajax/libs/jquery/1.3.1/jquery.min.js"></script>
+	<script type ="text/javascript" src = "js/main.js"></script>
 
 </head>
 
 <body>
 	<div id = "login">
-		<form name="form1" form method ="post" action ="http://web.njit.edu/~sam53/validation.php"><!--I think covered this up-->
+		<form action = "#" id="form1" form method ="post"><!--I think covered this up-->
    		  <h2>Login <small> enter your credentials </small></h2>
        		 <p>
  <!--username instead of name?-->
@@ -41,7 +39,7 @@ if(isset($_GET['status']) && $_GET['status'] == 'loggedout')
        		 </p>
         
      		 <p>
-                <label for ="pwd">Password: </label>
+                <label for ="pass">Password: </label>
                 <input name="pass" type="password" id="pass" />
              </p>
                     
@@ -49,9 +47,31 @@ if(isset($_GET['status']) && $_GET['status'] == 'loggedout')
                 <input type="submit" id="submit" value ="Login" name="Submit" />
              </p>
         </form>
-  
-<?php if (isset($_SESSION['response'])) echo "<h4 class = 'alert'>" . $_SESSION['response']. "</h4>"; 
-unset($_SESSION['response']);?>
-   </div><!--end login-->
+		<h4 class = 'alert'></h4>
+	   </div><!--end login-->
+	<script>
+	$("#alert").html(" ");
+	$(document).ready(function(){
+	   $("#form1").submit(function(){
+
+			user=$("#user").val();
+			pass=$("#pass").val();
+			 $.ajax({
+				type: "POST",
+				url: "http://web.njit.edu/~sam53/tunnel.php",
+				data: "user="+user+"&pass="+pass,
+				success: function(html){
+				  if(html == 'Success!'){
+					   window.location.replace("lobby.php");    
+				  } else {	
+						$('h4.alert').hide().fadeIn(700);
+						$(".alert").append(html);
+				  }
+				}
+			});
+			 return false;
+		});
+	});
+	</script>
 </body>
 </html>

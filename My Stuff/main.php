@@ -1,40 +1,33 @@
 <?php
     session_start();
     //1 is true, 0 is false
-    
-    
+       
     $username="wgs4";
     $password="dqMuqyd2";
     $server="sql.njit.edu";
     $db="wgs4";
-    
+    $qry = $_GET['qry'];
     mysql_connect("sql.njit.edu","wgs4","dqMuqyd2") or die ("Could not connect to the server");
     mysql_select_db ("wgs4") or die ("Couldn't connect to the database");
     
     
     //case CheckInDatabase checks to see if the user is in the db and returns the classes they are in and saves that in _SESSION['result']
-    switch ($_SESSION['query']){
-        case "getCourses":
+    switch ($qry){
+        case getCourses:
             $ans = mysql_query("
                                SELECT DISTINCT CourseName
                                FROM Attends, Teaches, Class
                                WHERE (Attends.SUCID = '".$_SESSION['user']."' OR Teaches.TUCID = '".$_SESSION['user']."')
                                AND Attends.CourseID = Class.CourseID AND Teaches.CourseID = Class.CourseID
                                ");
-            $arr = array();
-            while($row=mysql_fetch_assoc($ans)){
-                               $arr[]=$row;
-            }
-            $_SESSION['result']=arr;
-            $tunnel->result();
-            
-            
-            unset($_SESSION['query']);
-            header("location:http://web.njit.edu/~sam53/tunnel.php");
+
+			while($row=mysql_fetch_assoc($ans)){
+				echo "<li><a href=\"#\">".$row['CourseName']."</a></li>";
+			} 
             break;
             
             
-        case "insertMCQuestionToBank":
+        case insertMCQuestionToBank:
             mysql_query("
                         INSERT INTO Questions (TUCID,CourseID)
                         VALUES ('".$_SESSION['user']."',$CourseID)
@@ -59,13 +52,11 @@
                                 VALUES ($QID,$arrOfChoices(i),0)
                                 ");
             }
+  
             
-            
-            unset($_SESSION['query']);
-            header("location:http://web.njit.edu/~sam53/tunnel.php");
             break;
             
-        case "insertOEQuestionToBank":
+        case insertOEQuestionToBank:
             mysql_query("
                         INSERT INTO Questions (TUCID,CourseID)
                         VALUES ('".$_SESSION['user']."',$CourseID)
@@ -84,56 +75,47 @@
                             VALUES ($QID,$testCaseArr(i),$testAnswerArr(i))
                             ");
             }
+
             
-            
-            unset($_SESSION['query']);
-            header("location:http://web.njit.edu/~sam53/tunnel.php");
             break;
             
-        case "removeQuestionFromBank":
+        case removeQuestionFromBank:
             mysql_query("
                         DELETE FROM Questions
                         WHERE QID='$QID' AND CourseID='$CourseID'
                         ");
+
             
-            unset($_SESSION['query']);
-            header("location:http://web.njit.edu/~sam53/tunnel.php");
             break;
             
-        case "addTest":
+        case addTest:
             mysql_query("
                         INSET INTO TEST (CourseID, DayDue, DayAvai, TestName, Practice)
                         VALUES ($CourseID, $Due, $Avai, $Name, $Practice)
                         ");
+ 
             
-            
-            unset($_SESSION['query']);
-            header("location:http://web.njit.edu/~sam53/tunnel.php");
             break;
             
-        case "addQuestionToTest":
+        case addQuestionToTest:
             mysql_query("
                         INSERT INTO TestQuestions (QID,Points,TID)
                         VALUES ($QID,$Points,$TID)
                         ");
+     
             
-            
-            unset($_SESSION['query']);
-            header("location:http://web.njit.edu/~sam53/tunnel.php");
             break;
             
-        case "removeQuestionFromTest":
+        case removeQuestionFromTest:
             mysql_query("
                         DELETE FROM TestQuestions
                         WHERE TID=$TID AND QID=$QID
                         ");
+   
             
-            
-            unset($_SESSION['query']);
-            header("location:http://web.njit.edu/~sam53/tunnel.php");
             break;
             
-        case "getTestForCourse":
+        case getTestForCourse:
             $ans=mysql_query("
                              Select *
                              FROM Test
@@ -145,13 +127,11 @@
             }
             $_SESSION['result']=arr;
             $tunnel->result();
+ 
             
-            
-            unset($_SESSION['query']);
-            header("location:http://web.njit.edu/~sam53/tunnel.php");
             break;
             
-        case "studentAnswerForQuestion":
+        case studentAnswerForQuestion:
             if($Points==-1){
                 $realAnswer = mysql_query("
                                           SELECT Choice
@@ -201,11 +181,11 @@
                                 ");
             
             
-            unset($_SESSION['query']);
-            header("location:http://web.njit.edu/~sam53/tunnel.php");
+            
+            
             break;
             
-        case "getOETestCases":
+        case getOETestCases:
             $ans= mysql_query("
                               SELECT TestCase
                               FROM OE_Answers
@@ -219,11 +199,11 @@
             $tunnel->result();
             
             
-            unset($_SESSION['query']);
-            header("location:http://web.njit.edu/~sam53/tunnel.php");
+            
+            
             break;
             
-        case "getMCOptions":
+        case getMCOptions:
             $answers = mysql_query("
                                    SELECT Choice
                                    FROM MC_Options
@@ -235,25 +215,19 @@
             }
             $_SESSION['result']=arr;
             $tunnel->result();
-            
-            
-            unset($_SESSION['query']);
-            header("location:http://web.njit.edu/~sam53/tunnel.php");
+    
             break;
             
-        case "getMCQuestions":
+        case getMCQuestions:
             $_SESSION['result'] = mysql_query("
                                               SELECT Question
                                               FROM MC
                                               WHERE MCQID = $QID
-                                              ");
+                                              ");   
             
-            
-            unset($_SESSION['query']);
-            header("location:http://web.njit.edu/~sam53/tunnel.php");
             break;
             
-        default:
+        case validateUser:
             
             $teacher=mysql_query("
                                  SELECT *
@@ -267,19 +241,22 @@
                                  ");
             
             if(mysql_fetch_array($teacher)){
+			    echo 'Success!';
                 $_SESSION['teacher']=true;
-                header("location:http://web.njit.edu/~dc98/CS490/lobby.php");
+				$_SESSION['status'] = 'authorized';
                 
             }
             if(mysql_fetch_array($student)){
+				echo 'Success!';
                 $_SESSION['teacher']=false;
-                header("location:http://web.njit.edu/~dc98/CS490/lobby.php");
-            }
-    
-            
-            
-            
-            unset($_SESSION['query']);
+				$_SESSION['status'] = 'authorized';
+            } else {
+				echo 'Your UCID does not exist in our database';
+			}
+				
             break;
+	    default:
+			echo 'Query parse failed';
+			break;
     }
     ?>
