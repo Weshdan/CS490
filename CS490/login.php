@@ -58,14 +58,14 @@ if(isset($_GET['status']) && $_GET['status'] == 'loggedout')
 			pass=$("#pass").val();
 			 $.ajax({
 				type: "POST",
-				url: "http://web.njit.edu/~sam53/tunnel.php",
+				url: "http://web.njit.edu/~sam53/validation.php",
 				data: "user="+user+"&pass="+pass,
 				success: function(html){
 				  if(html == 'Success!'){
 					   window.location.replace("lobby.php");    
 				  } else {	
 						$('h4.alert').hide().fadeIn(700);
-						$(".alert").append(html);
+						$(".alert").html(html);
 				  }
 				}
 			});

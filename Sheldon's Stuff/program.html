@@ -1,0 +1,43 @@
+<html>
+<head>
+<title>Write your program</title>
+<script type ="text/javascript" src = "//code.jquery.com/jquery-1.10.2.min.js"></script>	
+</head>
+<body>
+
+<h1>Programming question</h1>
+
+<h2>Write a function 'addTwoNumbers' that adds two numbers 'a' and 'b'</h2>
+<form id = "code" method="POST" action="#">
+<TEXTAREA name="script" id = "script" rows="10" cols="80">
+int addTwoNumbers (int a, int b) {
+	//return a+b;
+}
+</TEXTAREA>
+<INPUT type="submit" value="Evaluate">
+</form>
+<div class = "fail"></div>
+	<script>
+	$("#result").html(" ");
+	$(document).ready(function(){
+	   $("#code").submit(function(){
+			code=$("#script").val()+'addTwoNumbers( 5, 7 );';
+			 $.ajax({
+				type: "POST",
+				url: "compile.php",
+				data: "script="+encodeURIComponent(code)+"&test=12",
+				success: function(html){
+					if(html == 'correct'){
+						$(".fail").html("<h2>Correct!</h2>");
+					} else {
+						$(".fail").html('"Error'+html);
+					}
+				}
+			});
+			 return false;
+		});
+	});
+	</script>
+</body>
+<html>
+

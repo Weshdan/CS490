@@ -246,7 +246,7 @@
 				$_SESSION['status'] = 'authorized';
                 
             }
-            if(mysql_fetch_array($student)){
+            else if(mysql_fetch_array($student)){
 				echo 'Success!';
                 $_SESSION['teacher']=false;
 				$_SESSION['status'] = 'authorized';
