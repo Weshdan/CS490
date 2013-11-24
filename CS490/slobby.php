@@ -12,7 +12,7 @@
 <html>
 	<head>
 		<link rel="stylesheet" type="text/css" href="css/style.css" />
-		<title>Sasdfasdfasdfasdf</title>
+		<title><?php echo $_SESSION['user'];?>'s Lobby</title>
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.0/jquery.min.js"></script>
 	</head>
     
@@ -23,26 +23,18 @@
 			
             <!--Controller for header.
            		I want "STUDENT" to change to "TEACHER" if a Teacher logs in.-->
-                <h1><span class="on">NJIT<span class="off">
-                <?php
-					if($_SESSION['teacher'])
-						echo "Teacher </span>";
-					else
-						echo "Student </span>";
-					echo $_SESSION['user'];
-				?>
-                </h1>
+                <h1><span class="on">NJIT<span class="off">Student </span></h1>
                 <h2>Only 24% Female! </h2>
             </div>   
             
             <!--Horizontal Top Bar-->
             <div id="menu">
                 <ul>
-                    <li class="menuitem"><a href="lobby.php">Home</a></li>
+                    <li class="menuitem" id="home"><a>Home</a></li>
                     <!--The About Page will be documentation for the FINAL version-->
-                    <li class="menuitem"><a href="lobby.php">About</a></li>
-                    <li class="menuitem"><a href="TestTemplate.php">Tests</a></li>
-                    <li class="menuitem"><a href="login.php?status=loggedout">Log Out</a></li>
+                    <li class="menuitem" id="about"><a>About</a></li>
+                    <li class="menuitem" id="tests"><a>Tests</a></li>
+                    <li><a href="login.php?status=loggedout">Log Out</a></li>
                 </ul>
             </div>
             
@@ -55,18 +47,7 @@
             	Where I fetch from database, the course contents and then fill.-->
                     <div id="leftmenu_main">   
 					<h3>Courses</h3>      
-                    <ul class = "getCourses">		
-					<script>
-					$.ajax({
-						type: "GET",
-						url: "http://web.njit.edu/~sam53/tunnel.php",
-						dataType: 'html',
-						data: {id: "getCourses"},
-						success: function(data) {
-							$(".getCourses").append( data );
-						}
-					});
-					</script>
+                    <ul class = "leftmenu">		
 					</ul> 
                     </div>
             <!--The bottom of the blue box on the sidebar-->        
@@ -91,5 +72,59 @@
        </div>
 	   
     </body>
+	<script>
+<!-- This sends an ajax get request to tunnel with the name of the query you want -->
+	$.ajax({
+		type: "GET",
+		url: "http://web.njit.edu/~sam53/tunnel.php",
+		dataType: 'json',
+		data: {id: "getCourses"}, <!-- id: is the name of the query you want-->
+		success: function(data) {
+			<!-- This part happens after the ajax request is successful, starting by appending a li list of courses to the <ul class = "leftmenu"></ul>-->
+			$.each(data, function(index, course) {
+				$(".leftmenu").append("<li class = 'lmi' id = "+ course.CourseName +"><a>"+ course.CourseName +"</a></li>");				
+			});
+			
+			<!-- This part makes the links from the previous link change the html code loacated in the <div id="content_main">.-->
+			$(".lmi").click(function () {
+				$("#content_main").html("<h2>Welcome to "+$(this).attr('id')+"! </h2>");
+			});
+		}
+	});
+	
+	$(".menuitem").click(function () {
+				$.ajax({
+				type: "GET",
+				url: "pager.php",
+				dataType: 'html',
+				data: {link: $(this).attr('id')},
+				success: function(data) {
+					$("#content_main").html(data);			
+				} 
+				});
+	});
+	
+	$("#tests").click(function () {
+				$.ajax({
+				type: "GET",
+				url: "http://web.njit.edu/~sam53/tunnel.php",
+				dataType: 'json',
+				data: {id: "getTestsForPerson"},
+				success: function(tbldata) {
+					$.each(tbldata, function (rid, rval){
+						if (rval.Practice == '1') {
+							rval.Practice = 'Yes';
+						} else {
+							rval.Practice = 'No';
+						}
+					
+						$("table").append("<tr><td>"+rval.CourseName+"</td><td>"+rval.Practice+"</td><td>"+rval.TestName+"</td><td>"+rval.DayDue+"</td><td>"+rval.DayAvai+"</td></tr>");
+					});
+				} 
+			});
+	});
+
+	</script>
+
 </html>
 

@@ -61,8 +61,10 @@ if(isset($_GET['status']) && $_GET['status'] == 'loggedout')
 				url: "http://web.njit.edu/~sam53/validation.php",
 				data: "user="+user+"&pass="+pass,
 				success: function(html){
-				  if(html == 'Success!'){
-					   window.location.replace("lobby.php");    
+				  if(html == 'teacher'){
+					   window.location.replace("tlobby.php");    
+				  } else if(html == 'student'){
+					   window.location.replace("slobby.php"); 
 				  } else {	
 						$('h4.alert').hide().fadeIn(700);
 						$(".alert").html(html);
